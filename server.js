@@ -1,21 +1,28 @@
-import http from "http";
+// import http from "http";
+import app from "./src/app.js";
+
 
 const PORT = 3666;
 
-const rotas = {
-    "/": "API com Express e Node.js", 
-    "/posts": "Rota de postagens",
-    "/autores": "Rota de autores",
+// const rotas = {
+//     "/": "API com Express e Node.js", 
+//     "/posts": "Rota de postagens",
+//     "/autores": "Rota de autores",
     
 
-}
+// }
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, { "Content-type": "text-plain" });
-    res.end(rotas[req.url]);
-});
+// const server = http.createServer((req, res) => {
+//     res.writeHead(200, { "Content-type": "text-plain" });
+//     res.end(rotas[req.url]);
+// });
 
-server.listen(PORT, () => {
-    console.log("servidor na escuta!");
-});
+// server.listen(PORT, () => {
+//     console.log("servidor na escuta!");
+// });
 
+app.listen(PORT, () => {
+        console.log("servidor na escuta!");
+    });
+    
+    
