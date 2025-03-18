@@ -1,15 +1,12 @@
-// import http from "http";
+//import http from "http";
 import app from "./src/app.js";
 
-
-const PORT = 3666;
+const PORT = 3000;
 
 // const rotas = {
-//     "/": "API com Express e Node.js", 
+//     "/": "API com Express e Node.js",
 //     "/posts": "Rota de postagens",
 //     "/autores": "Rota de autores",
-    
-
 // }
 
 // const server = http.createServer((req, res) => {
@@ -18,11 +15,9 @@ const PORT = 3666;
 // });
 
 // server.listen(PORT, () => {
-//     console.log("servidor na escuta!");
+//     console.log("Servidor na escuta!");
 // });
 
 app.listen(PORT, () => {
-        console.log("servidor na escuta!");
-    });
-    
-    
+    console.log("Servidor na escuta!");
+});
