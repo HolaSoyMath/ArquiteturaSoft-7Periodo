@@ -26,10 +26,8 @@ class PostController{
 
   // Get Post by ID
   static async getPostByID (req, res) {
-    console.log('tentou')
     try {
       const postById = await post.findById(req.params.id)
-      console.log('não localizou');
       
       if (!postById) {
           return res.status(404).send("Post não encontrado")
