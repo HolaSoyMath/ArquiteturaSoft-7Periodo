@@ -15,7 +15,7 @@ class PostController{
     try {
         const newPost = new post(req.body)
         await newPost.save();
-        res.status(201).send({
+        res.status(201).json({
             message: 'Post criado com sucesso',
             post: newPost
         })
