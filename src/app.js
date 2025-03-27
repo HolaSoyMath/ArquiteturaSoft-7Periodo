@@ -1,6 +1,6 @@
 import express from "express";
-import post from "./models/Post.js"
 import connectToDatabase from "./config/dbConnect.js"
+import routes from "./routes/index.js";
 
 const connection = await connectToDatabase;
 connection.on("error", (error) => {
@@ -12,7 +12,8 @@ connection.on("open", () => {
 
 
 const app = express();
-app.use(express.json());//middleware
+routes(app);
+// app.use(express.json());//middleware
 
 // const posts = [
 //     {
@@ -70,54 +71,54 @@ app.use(express.json());//middleware
 //     res.status(200).send("Post removido com sucesso!");
 // });
 
-app.get("/post", async (req, res) => {
-    try{
-        const listPosts = await post.find({});
-        res.status(200).json(listPosts);
-    }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-});
+// app.get("/post", async (req, res) => {
+//     try{
+//         const listPosts = await post.find({});
+//         res.status(200).json(listPosts);
+//     }
+//     catch(error){
+//         res.status(500).send(error.message)
+//     }
+// });
 
-app.post("/post", async (req, res) => {
-    try{
-        const newPost = new post(req.body)
-        await newPost.save();
-        res.status(201).json({
-            message: "Post Criado com sucesso",
-            post: newPost,
-        }
-        )
-    }
-    catch(error){
-        res.status(500).send(error.message)
-    }
+// app.post("/post", async (req, res) => {
+//     try{
+//         const newPost = new post(req.body)
+//         await newPost.save();
+//         res.status(201).json({
+//             message: "Post Criado com sucesso",
+//             post: newPost,
+//         }
+//         )
+//     }
+//     catch(error){
+//         res.status(500).send(error.message)
+//     }
 
-});
+// });
 
-app.get("/post/:id", async (req, res) => {
-    try{
-        const postById = await post.findById(req.params.id);
-        if (!postById){
-        return res.status(404).send("Post não encontrado")
-        }
-    }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-});
+// app.get("/post/:id", async (req, res) => {
+//     try{
+//         const postById = await post.findById(req.params.id);
+//         if (!postById){
+//         return res.status(404).send("Post não encontrado")
+//         }
+//     }
+//     catch(error){
+//         res.status(500).send(error.message)
+//     }
+// });
 
-app.delete("/posts/:id", async (req, res) => {
-    try{
-        const deletedPost = await post.findByIdAndDelete(req.params.id);
-        if (!deletedPost){
-        return res.status(404).send("Post não encontrado")
-        }
-    }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-});
+// app.delete("/posts/:id", async (req, res) => {
+//     try{
+//         const deletedPost = await post.findByIdAndDelete(req.params.id);
+//         if (!deletedPost){
+//         return res.status(404).send("Post não encontrado")
+//         }
+//     }
+//     catch(error){
+//         res.status(500).send(error.message)
+//     }
+// });
 
 export default app;
