@@ -8,13 +8,14 @@ class AuthorController{
     }
     getAllAuthor = async(req, res) =>{
         try{
-            const listAuthor = await this.authorService.getAllAuthor();
-            res.status(200).json(listAuthor.map((author) => new AuthorDTO(author)));
+            const listAuthors = await this.authorService.getAllAuthor();
+            res.status(200).json(listAuthors.map((author) => new AuthorDTO(author)));
         }
         catch(error){
             res.status(500).send(error.message)
         }
     }
+
     
     createAuthor = async (req, res)=>{
         try{
@@ -44,7 +45,37 @@ class AuthorController{
             res.status(500).send(error.message)
         }
     };
+
+    searchAuthorByName = async(req, res) =>{
+        try{
+            const {name} = req.params;
+            const authors = await this.authorService.searchAutorByName(name);
+            if(authors.lenght === 0){
+                return res.status(404).json({
+                    message: "Não encontrado",
+                    name: name,
+            });
+        }
+            res.status(200).json(authors.map((author) => new AuthorDTO(author)));
+        }
+        catch(error){
+            res.status(500).send(error.message)
+        }
+    };
     
+    // getAuthorByName = async (req, res) =>{
+    //     try{
+    //         const AuthorById = await this.authorService.getAuthorByName(req.params.id);
+    //         if (!AuthorById){
+    //         return res.status(404).send("Author não encontrado")
+    //         }
+    //         res.status(200).json(new AuthorDTO(AuthorById))
+            
+    //     }
+    //     catch(error){
+    //         res.status(500).send(error.message)
+    //     }
+    // };
     // static async deletedAuthor(req, res){
     //     try{
     //         const deletedAuthor = await author.findByIdAndDelete(req.params.id);
@@ -58,22 +89,40 @@ class AuthorController{
     //     }
     // }
     
-    // static async updateAuthor(req, res){
-    //     try{
-    //         const updateAuthor = await author.findByIdAndUpdate(req.params.id, req.body);
-    //         if (!updateAuthor){
-    //         return res.status(404).send("Author não encontrado")
-    //         }
+    updateAuthor = async (req, res) =>{
+        try{
+            const updateAuthor = await this.authorService.updateAuthor(req.params.id, req.body, {
+                new: true,
+            });
+            if (!updateAuthor){
+            return res.status(404).send("Author não encontrado")
+            }
     
-    //         res.status(201).json({
-    //             message: "Authora atulai",
-    //             Author: updateAuthor
-    //     });
-    //     }
-    //     catch(error){
-    //         res.status(500).send(error.message)
-    //     }
-    // }
+            res.status(201).json({
+                message: "Author Criado com sucesso",
+                authors: new AuthorDTO(updateAuthor),
+            }
+            )
+        }
+        catch(error){
+            res.status(500).send(error.message)
+        }
+    }
+
+    deletedAuthor = async (req, res) =>{
+        try{
+            const deleteAuthor = await this.authorService.deleteAuthor(req.params.id);
+            if (!deleteAuthor){
+            return res.status(404).send("Author não encontrado")
+            }
+    
+            res.status(200).json("Autor deletado"
+            )
+        }
+        catch(error){
+            res.status(500).send(error.message)
+        }
+    }
     
     }
 

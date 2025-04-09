@@ -1,7 +1,7 @@
 //import http from "http";
 import app from "./src/app.js";
 
-const PORT = 3000;
+const PORT = 6666;
 
 // const rotas = {
 //     "/": "API com Express e Node.js",

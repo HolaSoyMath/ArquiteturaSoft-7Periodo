@@ -13,7 +13,7 @@ export class BaseRepository{
 
     // implementar  o filtro (busca por nome, til, descption)
     async findAll(filter = {}){
-        return await this.model.findAll(filter)
+        return await this.model.find(filter)
     }
 
     async update(id,data){

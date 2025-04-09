@@ -4,7 +4,8 @@ export class AuthorDTO{
         this.id = author._id;
         this.name = author.name;
         this.email = author.email;
-        
+        this.createdAt = author.createdAt;
+        this.updateAt = author.updatedAt;
     }
 
     static fromRequest(body){
