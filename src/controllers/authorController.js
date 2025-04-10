@@ -32,6 +32,8 @@ class AuthorController{
         }
     
     };
+
+    
     getAuthorById = async (req, res) =>{
         try{
             const AuthorById = await this.authorService.getAuthorById(req.params.id);

@@ -1,75 +1,104 @@
-import post from "../models/Post.js"
+import { PostDTO } from "../dtos/postDTO.js";
+import { PostService } from "../services/PostService.js";
 
 class PostController{
-    static async getAllPosts(req, res){
-    try{
-        const listPosts = await post.find({});
-        res.status(200).json(listPosts);
+    constructor(){
+        this.PostService = new PostService()
     }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-}
-
-static async createPost(req, res){
-    try{
-        const newPost = new post(req.body)
-        await newPost.save();
-        res.status(201).json({
-            message: "Post Criado com sucesso",
-            post: newPost,
+    getAllPost = async(req, res) =>{
+        try{
+            const listPosts = await this.PostService.getAllPost();
+            res.status(200).json(listPosts.map((Post) => new PostDTO(Post)));
         }
-        )
-    }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-
-};
-static async getPostById(req, res) {
-    try{
-        const postById = await post.findById(req.params.id);
-        if (!postById){
-        return res.status(404).send("Post não encontrado")
+        catch(error){
+            res.status(500).send(error.message)
         }
-        res.status(200).json(postById)
-        
     }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-};
 
-static async deletedPost(req, res){
-    try{
-        const deletedPost = await post.findByIdAndDelete(req.params.id);
-        if (!deletedPost){
-        return res.status(404).send("Post não encontrado")
+    
+    createPost = async (req, res)=>{
+        try{
+            const newPost = await this.PostService.createPost(req.body);
+            
+            res.status(201).json({
+                message: "Post Criado com sucesso",
+                Post: new PostDTO(newPost),
+            }
+            )
         }
-        res.status(200).json(deletedPost)
-    }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-}
-
-static async updatePost(req, res){
-    try{
-        const updatePost = await post.findByIdAndUpdate(req.params.id, req.body);
-        if (!updatePost){
-        return res.status(404).send("Post não encontrado")
+        catch(error){
+            res.status(500).send(error.message)
         }
+    
+    };
+    getPostById = async (req, res) =>{
+        try{
+            const PostById = await this.PostService.getPostById(req.params.id);
+            if (!PostById){
+            return res.status(404).send("Post não encontrado")
+            }
+            res.status(200).json(new PostDTO(PostById))
+            
+        }
+        catch(error){
+            res.status(500).send(error.message)
+        }
+    };
 
-        res.status(201).json({
-            message: "POsta atulai",
-            post: updatePost
-    });
+    // searchPostByName = async(req, res) =>{
+    //     try{
+    //         const {name} = req.params;
+    //         const Posts = await this.PostService.searchAutorByName(name);
+    //         if(Posts.lenght === 0){
+    //             return res.status(404).json({
+    //                 message: "Não encontrado",
+    //                 name: name,
+    //         });
+    //     }
+    //         res.status(200).json(Posts.map((Post) => new PostDTO(Post)));
+    //     }
+    //     catch(error){
+    //         res.status(500).send(error.message)
+    //     }
+    // };
+    
+    // updatePost = async (req, res) =>{
+    //     try{
+    //         const updatePost = await this.PostService.updatePost(req.params.id, req.body, {
+    //             new: true,
+    //         });
+    //         if (!updatePost){
+    //         return res.status(404).send("Post não encontrado")
+    //         }
+    
+    //         res.status(201).json({
+    //             message: "Post Criado com sucesso",
+    //             Posts: new PostDTO(updatePost),
+    //         }
+    //         )
+    //     }
+    //     catch(error){
+    //         res.status(500).send(error.message)
+    //     }
+    // }
+
+    // deletedPost = async (req, res) =>{
+    //     try{
+    //         const deletePost = await this.PostService.deletePost(req.params.id);
+    //         if (!deletePost){
+    //         return res.status(404).send("Post não encontrado")
+    //         }
+    
+    //         res.status(200).json("Autor deletado"
+    //         )
+    //     }
+    //     catch(error){
+    //         res.status(500).send(error.message)
+    //     }
+    // }
+    
     }
-    catch(error){
-        res.status(500).send(error.message)
-    }
-}
 
-}
 
-export default PostController;
+//export default PostController;
+export default new PostController();
