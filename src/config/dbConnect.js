@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv'
 
-async function connectToDatabase(){
-    mongoose.connect("mongodb+srv://davicoenerosa:Jenio123456@cluster0.uzoth.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+dotenv.config()
 
-    return mongoose.connection;
+async function connectToDatabase() {
+  mongoose.connect(process.env.DB_CONNECTION_STRING)
+
+  return mongoose.connection;
 }
 
-export default connectToDatabase();
+export default connectToDatabase;
 

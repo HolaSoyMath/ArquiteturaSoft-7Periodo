@@ -65,32 +65,6 @@ class AuthorController{
         }
     };
     
-    // getAuthorByName = async (req, res) =>{
-    //     try{
-    //         const AuthorById = await this.authorService.getAuthorByName(req.params.id);
-    //         if (!AuthorById){
-    //         return res.status(404).send("Author não encontrado")
-    //         }
-    //         res.status(200).json(new AuthorDTO(AuthorById))
-            
-    //     }
-    //     catch(error){
-    //         res.status(500).send(error.message)
-    //     }
-    // };
-    // static async deletedAuthor(req, res){
-    //     try{
-    //         const deletedAuthor = await author.findByIdAndDelete(req.params.id);
-    //         if (!deletedAuthor){
-    //         return res.status(404).send("Author não encontrado")
-    //         }
-    //         res.status(200).json(deletedAuthor)
-    //     }
-    //     catch(error){
-    //         res.status(500).send(error.message)
-    //     }
-    // }
-    
     updateAuthor = async (req, res) =>{
         try{
             const updateAuthor = await this.authorService.updateAuthor(req.params.id, req.body, {

@@ -8,8 +8,4 @@ const routes = (app) => {
     app.use(express.json(), post, authors)
 }
 
-
-
-
-
 export default routes;

@@ -7,13 +7,18 @@ export class AuthorService{
         this.AuthorRepository = new AuthorRepository();
     }
 
+    // Criar um novo autor
     createAuthor = async (authorData) => {
         const author = AuthorDTO.fromRequest(authorData);
         return await this.AuthorRepository.create(author);
     }
+
+    // Obter lista de todos os autores
     getAllAuthor = async () => {
         return await this.AuthorRepository.findAll();
     }
+
+    // Obter autor pelo seu ID
     getAuthorById = async (id) => {
         const foundAuthor = await this.AuthorRepository.findById(id);
         if (!foundAuthor){
@@ -21,6 +26,8 @@ export class AuthorService{
         }
         return foundAuthor
     }
+
+    // Atualizar informações de Autor
     updateAuthor = async (id, authorData) => {
         const updatedAuthor = await this.AuthorRepository.update(id, authorData);
         if (!updatedAuthor){
@@ -28,6 +35,8 @@ export class AuthorService{
         }
         return updatedAuthor
     }
+
+    // Deletar autor
     deleteAuthor = async (id) => {
         const deleteAuthor = await this.AuthorRepository.delete(id);
         if (!deleteAuthor){
@@ -36,17 +45,11 @@ export class AuthorService{
         return deleteAuthor
     }
 
+    // Procurar autor pelo nome
     searchAutorByName = async (name) =>{
         if(!name || name.trim() === ""){
             throw new Error("Informar o nome do Autor")
         }
         return await this.AuthorRepository.searchByName(name)
     }
-
-//     deleteAuthoor = async () => {
-//         return await this.AuthorRepository 
-//     }
-//     searchAutorByName  = async () => {
-//         return await this.AuthorRepository
-//     }
 }

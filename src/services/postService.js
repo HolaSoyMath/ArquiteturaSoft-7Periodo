@@ -10,14 +10,11 @@ export class PostService{
         this.authorRepository = new AuthorRepository();
     }
 
+    // Criar um novo Post
     createPost = async (PostData) => {
-
         const foundAuthor = await this.authorRepository.findById(PostData.author)
-
         if (!foundAuthor){
-
             throw new Error("Autor não encontrado")
-
         }
 
         const completePost = {
@@ -26,13 +23,15 @@ export class PostService{
                 ...foundAuthor._doc
             }
         }
-
-   
         return await this.PostRepository.create(completePost);
     }
-    getAllPost = async () => {
+
+    // Obter todos os posts
+    getAllPosts = async () => {
         return await this.PostRepository.findAll();
     }
+
+    // Obter posts pelo ID do autor
     getPostById = async (id) => {
         const foundPost = await this.PostRepository.findById(id);
         if (!foundPost){
@@ -40,26 +39,4 @@ export class PostService{
         }
         return foundPost
     }
-    // updatePost = async (id, PostData) => {
-    //     const updatedPost = await this.PostRepository.update(id, PostData);
-    //     if (!updatedPost){
-    //         throw new Error("Autor não encontrado!")
-    //     }
-    //     return updatedPost
-    // }
-    // deletePost = async (id) => {
-    //     const deletePost = await this.PostRepository.delete(id);
-    //     if (!deletePost){
-    //         throw new Error("Autor não encontrado!")
-    //     }
-    //     return deletePost
-    // }
-
-    // searchAutorByName = async (name) =>{
-    //     if(!name || name.trim() === ""){
-    //         throw new Error("Informar o nome do Autor")
-    //     }
-    //     return await this.PostRepository.searchByName(name)
-    // }
-
 }
